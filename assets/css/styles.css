@@ -1,0 +1,592 @@
+ /* General Styles */
+ body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #6f4e37; /* Coffee Brown */
+    background-color: #f4f4f4;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header Styles */
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #8b5a2b; /* Earth Brown */
+    padding: 15px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d2b48c; /* Tan */
+}
+
+.menu {
+    display: flex;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu ul li a {
+    padding: 10px 20px;
+    transition: background 0.3s;
+    color: #fff;
+}
+
+.menu ul li a:hover {
+    background-color: #d2b48c; /* Tan */
+    color: #fff;
+    border-radius: 5px;
+}
+
+/* Hamburger Menu */
+.hamburger {
+    cursor: pointer;
+    display: none; /* Initially hidden on desktop */
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #d2b48c; /* Tan */
+    transition: all 0.3s ease;
+}
+
+/* Hero Section Styles */
+.hero {
+    position: relative;
+    text-align: center;
+    margin-top: 20px; /* Adjust as necessary */
+    border-radius: 0px;
+    overflow: hidden; /* Ensure the overlay doesn't spill out */
+}
+
+/* Pack image styling */
+.hero-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
+    z-index: 1;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #fff;
+    z-index: 2; /* Make sure text is above the overlay */
+}
+
+.hero-content h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
+}
+
+.hero-content p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
+}
+
+.cta {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #b17144; /* Tan */
+    color: #fff;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.3s;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Stronger shadow for contrast */
+    text-decoration: none;
+    z-index: 2; /* Make sure button is above the overlay */
+}
+
+.cta:hover {
+    background-color: #c19a6b; /* Darker Tan */
+    transform: scale(1.05);
+}
+
+/* About Section Styles */
+.about {
+    display: flex;
+    flex-direction: column; /* Stack content vertically on mobile */
+    padding: 60px 20px; /* Reduced padding for mobile */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 30px 0; /* Reduced margin for mobile */
+}
+
+.about .content {
+    padding-right: 0; /* Remove right padding on mobile */
+}
+
+.about .image img {
+    width: 25%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px; /* Add margin for spacing */
+}
+
+/* Benefits Section Styles */
+.benefits {
+    padding: 60px 20px; /* Reduced padding for mobile */
+    background-color: #6f4e37; /* Coffee Brown */
+    text-align: center;
+    color: #fff;
+    border-radius: 0px;
+    margin: 30px 0; /* Reduced margin for mobile */
+}
+
+.benefits-grid {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on mobile */
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.benefit-item {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #6f4e37; /* Coffee Brown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.benefit-item img {
+    width: 60px; /* Adjust image size for mobile */
+    margin-bottom: 20px;
+}
+
+/* Ingredients Section Styles */
+.ingredients {
+    padding: 60px 20px; /* Reduced padding for mobile */
+    background-color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    margin: 30px 0; /* Reduced margin for mobile */
+}
+
+.ingredients-grid {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on mobile */
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.ingredient-item img {
+    width: 80px; /* Adjust image size for mobile */
+    margin-bottom: 20px;
+}
+
+/* Reviews Section Styles */
+.reviews {
+    padding: 60px 20px; /* Reduced padding for mobile */
+    background-color: #8b5a2b; /* Earth Brown */
+    text-align: center;
+    color: #fff;
+    border-radius: 0px;
+    margin: 30px 0; /* Reduced margin for mobile */
+}
+
+.reviews-slider {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on mobile */
+    gap: 20px;
+    padding-top: 0px;
+}
+
+.review-item {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    color: #6f4e37; /* Coffee Brown */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+/* Pricing Section Styles */
+#pricing {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Center align the pack items */
+.pack {
+    display: inline-block;
+    margin: 20px;
+    width: 300px;
+    vertical-align: top;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Pack image container styling */
+.pack-image-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Pack image styling */
+.pack-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Price overlay styling */
+.price-overlay {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Order Now button styling */
+.order-now-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.order-now-btn {
+    background-color: #b17144; /* Coffee brown color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-now-btn:hover {
+    background-color: #3e2d1a; /* Slightly darker coffee brown for hover effect */
+}
+/* Form Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+/* Footer Styles */
+.footer {
+    background-color: #8b5a2b; /* Earth Brown */
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    border-radius: 0px;
+}
+
+.footer .social-media a {
+    margin: 0 10px;
+    color: #d2b48c; /* Tan */
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+/* General Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+/* Hover Animation for Order Now Button */
+.cta:hover {
+    background-color: #c19a6b; /* Darker Tan */
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Slide-in Animation for Hamburger Menu */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.hamburger-menu.active {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Media Queries for Mobile Devices */
+@media screen and (max-width: 768px) {
+    .menu {
+        display: none; /* Hide menu on mobile */
+    }
+
+    .hamburger {
+        display: flex; /* Show hamburger on mobile */
+    }
+
+    .menu.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #8b5a2b; /* Earth Brown */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .menu ul li a {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .cta {
+        font-size: 14px; /* Smaller font size for mobile */
+        padding: 10px 20px; /* Adjusted padding for mobile */
+    }
+
+    .benefit-item, .ingredient-item, .review-item, .pricing-item {
+        transform: none; /* Disable hover effect on mobile */
+        transition: none;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, .submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  #confirmation {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+button.submit1 {
+    background-color: #4b2e19; /* Coffee brown color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.success-confirmation {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.check-icon {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #8b5a2b; /* Earth brown */
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-section p,
+.footer-section ul {
+    margin: 0;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-info li {
+    margin-bottom: 5px;
+}
+
+/* Social Media Section */
+.social-media .social-links {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.social-links img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s;
+}
+
+.social-links img:hover {
+    transform: scale(1.1); /* Zoom on hover */
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #dac1af;
+}
+
+
+
