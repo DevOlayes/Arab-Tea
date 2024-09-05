@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // Handle form submission
 app.post('/submit-order', (req, res) => {
-    const { packs, name, address, email, phone, whatsapp } = req.body;
+    const { packs, name, state, address, email, phone, whatsapp } = req.body;
 
     const transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -35,7 +35,7 @@ app.post('/submit-order', (req, res) => {
         from: `${name} <${email}>`,
         to: process.env.RECIPIENT_EMAIL,
         subject: 'New Order Submission',
-        text: `Number of Packs: ${packs}\nName: ${name}\nAddress: ${address}\nEmail: ${email}\nPhone: ${phone}\nWhatsApp: ${whatsapp}`
+        text: `Number of Packs: ${packs}\nName: ${state}\nState: ${name}\nAddress: ${address}\nEmail: ${email}\nPhone: ${phone}\nWhatsApp: ${whatsapp}`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
