@@ -67,7 +67,7 @@ document.getElementById('orderForm').addEventListener('/submit-order', function(
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showSuccessConfirmation(data.message);
+            showSuccessConfirmation(data.message, data.price); // Pass the price for display
         } else {
             alert('There was an issue placing your order. Please try again.');
         }
@@ -75,25 +75,35 @@ document.getElementById('orderForm').addEventListener('/submit-order', function(
     .catch(error => console.error('Error:', error));
 });
 
-function showSuccessConfirmation(message) {
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-confirmation';
+// Success Confirmation Popup with Animated Green Check
+function showSuccessConfirmation(message, price) {
+    const successModal = document.createElement('div');
+    successModal.className = 'success-modal';
 
     // Create the check mark icon
-    const checkIcon = document.createElement('span');
-    checkIcon.innerHTML = '&#10004;'; // HTML code for a check mark
+    const checkIcon = document.createElement('div');
     checkIcon.className = 'check-icon';
+    checkIcon.innerHTML = `
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
+        </svg>
+    `;
 
-    // Append the check mark and message to the success div
-    successDiv.appendChild(checkIcon);
-    const messageSpan = document.createElement('span');
-    messageSpan.textContent = message;
-    successDiv.appendChild(messageSpan);
+    // Create the message
+    const successMessage = document.createElement('p');
+    successMessage.textContent = `${message} Total amount: ₦${price}`;
 
-    document.body.appendChild(successDiv);
+    // Append elements to the success modal
+    successModal.appendChild(checkIcon);
+    successModal.appendChild(successMessage);
 
+    // Add the modal to the body
+    document.body.appendChild(successModal);
+
+    // Set timeout to remove the modal after 5 seconds
     setTimeout(() => {
-        successDiv.remove();
+        successModal.remove();
     }, 5000);
 }
 
@@ -104,6 +114,7 @@ window.onclick = function(event) {
     }
 }
 
+// Populate form and show confirmation message on button click
 document.querySelectorAll('.order-now-btn').forEach(button => {
     button.addEventListener('click', function() {
         const packs = this.dataset.packs;

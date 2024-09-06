@@ -4,7 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const path = require('path');
-const { JSDOM } = require("jsdom");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +13,28 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Pricing logic based on pack quantity
+const calculatePrice = (packs) => {
+    let price;
+    switch (packs) {
+        case '1':
+            price = 15000;
+            break;
+        case '2':
+            price = 25000;
+            break;
+        case '3':
+            price = 30000; // Buy 2, get 1 free
+            break;
+        case '4':
+            price = 39000; // Buy 3, get 1 free
+            break;
+        default:
+            price = 0; // If no valid pack is selected
+    }
+    return price;
+};
+
 // Serve the HTML file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
@@ -22,6 +43,7 @@ app.get('/', (req, res) => {
 // Handle form submission
 app.post('/submit-order', (req, res) => {
     const { packs, name, state, address, email, phone, whatsapp } = req.body;
+    const price = calculatePrice(packs); // Calculate the price based on the number of packs
 
     const transporter = nodemailer.createTransport({
         service: 'Gmail',
@@ -35,27 +57,19 @@ app.post('/submit-order', (req, res) => {
         from: `${name} <${email}>`,
         to: process.env.RECIPIENT_EMAIL,
         subject: 'New Order Submission',
-        text: `Number of Packs: ${packs}\nName: ${state}\nState: ${name}\nAddress: ${address}\nEmail: ${email}\nPhone: ${phone}\nWhatsApp: ${whatsapp}`
+        text: `Number of Packs: ${packs}\nPrice: ₦${price}\nName: ${name}\nState: ${state}\nAddress: ${address}\nEmail: ${email}\nPhone: ${phone}\nWhatsApp: ${whatsapp}`
     };
 
+    // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
+            // If there's an error, send a failure response
             return res.status(500).json({ success: false, message: 'Error sending email: ' + error.message });
         }
-        res.json({ success: true, message: 'Order placed successfully!' });
+        // Send success response if email is sent
+        res.json({ success: true, message: 'Order placed successfully!', price: price });
     });
 });
-
-// JSDOM Manipulation (for demonstration purposes)
-const dom = new JSDOM(`<!DOCTYPE html><html><head></head><body></body></html>`);
-const document = dom.window.document;
-
-var link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = "./assets/css/styles.css";
-document.head.appendChild(link);
-
-console.log(document.documentElement.outerHTML);
 
 // Start the server
 app.listen(PORT, () => {
