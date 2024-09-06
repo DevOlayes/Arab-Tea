@@ -56,8 +56,8 @@ app.post('/submit-order', (req, res) => {
     });
     
     const mailOptions = {
-        from: 'your-email@gmail.com',
-        to: 'your-email@gmail.com', // Send the order details to your Gmail
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER, // Send the order details to your Gmail
         subject: 'New Order Received',
         text: `
             New Order Details:
