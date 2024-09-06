@@ -45,9 +45,14 @@ orderButtons.forEach(button => {
         document.getElementById('selectedPacks').value = packs;
         document.getElementById('selectedPrice').value = price;
         
+        // Also update the confirmation field for user feedback
+        const confirmationInput = document.getElementById('confirmation');
+        confirmationInput.value = `You are ordering ${packs} pack(s) for ₦${price}`;
+        
         modal.style.display = 'block';
     });
 });
+
 
 // Close Modal
 closeBtn.onclick = function() {
@@ -55,74 +60,55 @@ closeBtn.onclick = function() {
 }
 
 // Handle Form Submission
-document.getElementById('orderForm').addEventListener('/submit-order', function(e) {
-    e.preventDefault(); // Prevent page reload
+document.getElementById("orderForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
 
-    const formData = new FormData(this);
+    const packs = document.getElementById("selectedPacks").value;
+    const price = document.getElementById("selectedPrice").value;
+    const name = document.getElementById("name").value;
+    const state = document.getElementById("state").value;
+    const address = document.getElementById("address").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const whatsapp = document.getElementById("whatsapp").value;
 
+    // Data to be sent to the backend
+    const formData = {
+        packs,
+        price,
+        name,
+        state,
+        address,
+        email,
+        phone,
+        whatsapp
+    };
+
+    // Send the form data using Fetch API to backend
     fetch('/submit-order', {
         method: 'POST',
-        body: formData
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showSuccessConfirmation(data.message, data.price); // Pass the price for display
+            // Show success message
+            document.getElementById("order-success-message").textContent = "Your order is successful! Total Price: " + price;
+            document.getElementById("success-modal").style.display = "block"; // Show success modal
+
+            // Close the order form modal
+            document.getElementById("orderModal").style.display = "none";
+
+            // Set timeout to close the success modal after 3 seconds (3000 ms)
+            setTimeout(function() {
+                document.getElementById("success-modal").style.display = "none";
+            }, 3000); // Adjust the delay time as needed (3000 = 3 seconds)
         } else {
-            alert('There was an issue placing your order. Please try again.');
+            alert("Error submitting your order.");
         }
     })
-    .catch(error => console.error('Error:', error));
-});
-
-// Success Confirmation Popup with Animated Green Check
-function showSuccessConfirmation(message, price) {
-    const successModal = document.createElement('div');
-    successModal.className = 'success-modal';
-
-    // Create the check mark icon
-    const checkIcon = document.createElement('div');
-    checkIcon.className = 'check-icon';
-    checkIcon.innerHTML = `
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
-            <path class="checkmark-check" fill="none" d="M14 27l7 7 16-16"/>
-        </svg>
-    `;
-
-    // Create the message
-    const successMessage = document.createElement('p');
-    successMessage.textContent = `${message} Total amount: ₦${price}`;
-
-    // Append elements to the success modal
-    successModal.appendChild(checkIcon);
-    successModal.appendChild(successMessage);
-
-    // Add the modal to the body
-    document.body.appendChild(successModal);
-
-    // Set timeout to remove the modal after 5 seconds
-    setTimeout(() => {
-        successModal.remove();
-    }, 5000);
-}
-
-// Close modal if the user clicks outside of it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-
-// Populate form and show confirmation message on button click
-document.querySelectorAll('.order-now-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const packs = this.dataset.packs;
-        const price = this.dataset.price;
-        const confirmationInput = document.getElementById('confirmation');
-        confirmationInput.value = `You are ordering ${packs} pack(s) for ₦${price}`;
-
-        // Show the form
-        document.getElementById('orderForm').style.display = 'block';
-    });
+    .catch(error => console.error("Error:", error));
 });

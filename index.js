@@ -41,37 +41,46 @@ app.get('/', (req, res) => {
 });
 
 // Handle form submission
-app.post('/submit-order', (req, res) => {
-    const { packs, name, state, address, email, phone, whatsapp } = req.body;
-    const price = calculatePrice(packs); // Calculate the price based on the number of packs
+app.use(bodyParser.json());
 
+app.post('/submit-order', (req, res) => {
+    const { packs, price, name, state, address, email, phone, whatsapp } = req.body;
+
+    // Configure nodemailer
     const transporter = nodemailer.createTransport({
-        service: 'Gmail',
+        service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
+            user: process.env.EMAIL_USER, // Replace with your Gmail address
+            pass: process.env.EMAIL_PASS   // Replace with your Gmail password or App Password
         }
     });
-
+    
     const mailOptions = {
-        from: `${name} <${email}>`,
-        to: process.env.RECIPIENT_EMAIL,
-        subject: 'New Order Submission',
-        text: `Number of Packs: ${packs}\nPrice: ₦${price}\nName: ${name}\nState: ${state}\nAddress: ${address}\nEmail: ${email}\nPhone: ${phone}\nWhatsApp: ${whatsapp}`
+        from: 'your-email@gmail.com',
+        to: 'your-email@gmail.com', // Send the order details to your Gmail
+        subject: 'New Order Received',
+        text: `
+            New Order Details:
+            Name: ${name}
+            Packs: ${packs}
+            Price: ${price}
+            State: ${state}
+            Address: ${address}
+            Email: ${email}
+            Phone: ${phone}
+            WhatsApp: ${whatsapp}
+        `
     };
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            // If there's an error, send a failure response
-            return res.status(500).json({ success: false, message: 'Error sending email: ' + error.message });
+            return res.json({ success: false, message: "Error sending email: " + error.message });
         }
-        // Send success response if email is sent
-        res.json({ success: true, message: 'Order placed successfully!', price: price });
+        return res.json({ success: true, message: "Order submitted successfully!" });
     });
 });
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
